@@ -83,7 +83,7 @@ export interface Props<TFieldMiddlewareSource = any, TFieldMiddlewareContext = a
     resolvers?: IResolvers | IResolvers[];
     resolverValidationOptions?: IResolverValidationOptions;
     schema?: GraphQLSchema;
-    contextExecutableSchema?: (context: Context) => GraphQLSchema;
+    contextExecutableSchema?: (context: any) => GraphQLSchema;
     context?: Context | ContextCallback;
     mocks?: IMocks | boolean;
     middlewares?: (IFieldMiddleware<TFieldMiddlewareSource, TFieldMiddlewareContext, TFieldMiddlewareArgs> | IFieldMiddlewareGenerator<TFieldMiddlewareSource, TFieldMiddlewareContext, TFieldMiddlewareArgs>)[];

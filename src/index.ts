@@ -79,7 +79,7 @@ export class GraphQLServer {
     getEndpoint: false,
   }
   executableSchema: GraphQLSchema
-  contextExecutableSchema?: (context: Context) => GraphQLSchema
+  contextExecutableSchema?: (context: any) => GraphQLSchema
   context: any
 
   private middlewareFragmentReplacements: FragmentReplacement[] = []

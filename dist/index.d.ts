@@ -5,7 +5,7 @@ import { GraphQLSchema } from 'graphql';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { SubscriptionServerOptions, Options, OptionsWithHttps, OptionsWithoutHttps, Props, Context } from './types';
+import { SubscriptionServerOptions, Options, OptionsWithHttps, OptionsWithoutHttps, Props } from './types';
 export { MockList } from 'graphql-tools';
 export { PubSub, withFilter } from 'graphql-subscriptions';
 export { Options, OptionsWithHttps, OptionsWithoutHttps };
@@ -16,7 +16,7 @@ export declare class GraphQLServer {
     subscriptionServerOptions: SubscriptionServerOptions | null;
     options: Options;
     executableSchema: GraphQLSchema;
-    contextExecutableSchema?: (context: Context) => GraphQLSchema;
+    contextExecutableSchema?: (context: any) => GraphQLSchema;
     context: any;
     private middlewareFragmentReplacements;
     private middlewares;

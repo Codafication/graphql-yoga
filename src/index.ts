@@ -42,6 +42,7 @@ import {
   OptionsWithoutHttps,
   Props,
   ValidationRules,
+  Context,
 } from './types'
 import { ITypeDefinitions } from 'graphql-tools/dist/Interfaces'
 import { defaultErrorFormatter } from './defaultErrorFormatter'
@@ -78,6 +79,7 @@ export class GraphQLServer {
     getEndpoint: false,
   }
   executableSchema: GraphQLSchema
+  contextExecutableSchema?: (context: Context) => GraphQLSchema
   context: any
 
   private middlewareFragmentReplacements: FragmentReplacement[] = []
@@ -142,6 +144,8 @@ export class GraphQLServer {
       this.executableSchema = schema
       this.middlewareFragmentReplacements = fragmentReplacements
     }
+
+    this.contextExecutableSchema = props.contextExecutableSchema
   }
 
   // use, get and post mimic the methods on express.Application
@@ -255,7 +259,8 @@ export class GraphQLServer {
     app.post(
       this.options.endpoint,
       graphqlExpress(async (request, response) => {
-        let context
+        let context: Context
+
         try {
           context =
             typeof this.context === 'function'
@@ -271,7 +276,9 @@ export class GraphQLServer {
         }
 
         return {
-          schema: this.executableSchema,
+          schema: this.contextExecutableSchema
+            ? this.contextExecutableSchema(context)
+            : this.executableSchema,
           tracing: tracing(request),
           cacheControl: this.options.cacheControl,
           formatError: this.options.formatError || defaultErrorFormatter,
@@ -309,7 +316,9 @@ export class GraphQLServer {
           }
 
           return {
-            schema: this.executableSchema,
+            schema: this.contextExecutableSchema
+              ? this.contextExecutableSchema(context)
+              : this.executableSchema,
             tracing: tracing(request),
             cacheControl: this.options.cacheControl,
             formatError: this.options.formatError || defaultErrorFormatter,

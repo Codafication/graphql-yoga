@@ -113,6 +113,7 @@ export interface Props<
   resolvers?: IResolvers | IResolvers[]
   resolverValidationOptions?: IResolverValidationOptions
   schema?: GraphQLSchema
+  contextExecutableSchema?: (context: Context) => GraphQLSchema
   context?: Context | ContextCallback
   mocks?: IMocks | boolean
   middlewares?: (
